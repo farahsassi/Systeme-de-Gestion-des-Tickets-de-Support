@@ -1,0 +1,32 @@
+<%- include("partials/header") %>
+<div class="wrapper">
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-5 shadow-lg" style="background-color: #1f1f2e; border-radius: 20px; width: 100%; max-width: 450px;">
+    
+    <h1 class="text-center text-light mb-4 fw-bold">Connexion</h1>
+
+    <form action="/login" method="POST">
+      <div class="mb-4">
+        <label for="email" class="form-label text-light">Adresse Email</label>
+        <input type="email" id="email" name="email" class="form-control bg-dark text-light border-0" placeholder="exemple@domain.com" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label text-light">Mot de Passe</label>
+        <input type="password" id="password" name="password" class="form-control bg-dark text-light border-0" placeholder="Votre mot de passe" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 fw-bold" style="transition: background 0.3s;">
+        Se connecter
+      </button>
+
+      <div class="text-center mt-4">
+        <p class="text-light">Pas encore de compte ?
+          <a href="/register" class="link-info text-decoration-none fw-bold">S'inscrire</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<%- include("partials/footer") %>
