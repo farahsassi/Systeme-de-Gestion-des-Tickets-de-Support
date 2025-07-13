@@ -1,0 +1,56 @@
+<%- include("partials/header") %>
+<div class="wrapper">
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-5 shadow-lg" style="background-color: #1f1f2e; border-radius: 20px; width: 100%; max-width: 500px;">
+    
+    <h1 class="text-center text-light mb-4 fw-bold">Créer un Compte</h1>
+
+    <form method="POST" action="/register">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="text-light">Prénom</label>
+          <input type="text" name="firstName" class="form-control text-dark border-0" placeholder="Votre prénom" required>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="text-light">Nom</label>
+          <input type="text" name="lastName" class="form-control text-dark border-0" placeholder="Votre nom" required>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="text-light">Téléphone</label>
+        <input type="text" name="phoneNumber" class="form-control text-dark border-0" placeholder="+216 ..." required>
+      </div>
+
+      <div class="mb-3">
+        <label class="text-light">Email</label>
+        <input type="email" name="email" class="form-control  text-dark border-0" placeholder="exemple@email.com" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="text-light">Mot de passe</label>
+        <input type="password" name="password" class="form-control  text-dark border-0" placeholder="••••••••" required>
+      </div>
+
+      <div class="mb-4">
+        <label class="text-light">Rôle</label>
+        <select name="role" class="form-select text-dark border-0">
+          <option value="user">Utilisateur</option>
+          <option value="agent">Agent</option>
+          <option value="admin">Administrateur</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-success w-100 fw-bold">Créer le compte</button>
+
+      <div class="text-center mt-4">
+        <p class="text-light">Déjà inscrit ?
+          <a href="/login" class="link-info text-decoration-none fw-bold">Se connecter</a>
+        </p>
+      </div>
+    </form>
+
+  </div>
+</div>
+</div>
+<%- include("partials/footer") %>

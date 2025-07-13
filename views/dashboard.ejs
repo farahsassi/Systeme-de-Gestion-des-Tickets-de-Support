@@ -1,0 +1,34 @@
+<%- include("partials/header") %>
+<div class="wrapper">
+<div class="container py-5">
+  <h1 class="text-center mb-5 text-dark">Tableau de Bord - Tickets</h1>
+
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card bg-secondary text-light text-center p-4 shadow-sm hover-shadow">
+        <h4> Ouverts</h4>
+        <p class="display-6"><%= stats.ouvert %></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-warning text-light text-center p-4 shadow-sm hover-shadow">
+        <h4>En cours</h4>
+        <p class="display-6"><%= stats.encours %></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-info text-light text-center p-4 shadow-sm hover-shadow">
+        <h4> Résolus</h4>
+        <p class="display-6"><%= stats.resolu %></p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card bg-danger text-light text-center p-4 shadow-sm hover-shadow">
+        <h4>Fermés</h4>
+        <p class="display-6"><%= stats.ferme %></p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<%- include("partials/footer") %>

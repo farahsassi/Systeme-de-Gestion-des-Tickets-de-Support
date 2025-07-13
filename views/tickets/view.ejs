@@ -1,0 +1,100 @@
+<%- include("../partials/header") %>
+<div class="wrapper">
+<div class="container my-5">
+  <div class="card shadow p-4 mx-auto" style="max-width: 800px;">
+    <h2 class="mb-4 text-center text-dark fw-bold"><%= ticket.title %></h2>
+
+    <div class="row text-center mb-4">
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Description :</label>
+        <p class="text-muted"><%= ticket.description %></p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Catégorie :</label>
+        <p class="text-muted"><%= ticket.category %></p>
+      </div>
+    </div>
+
+    <div class="row text-center mb-4">
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Priorité :</label>
+        <% if (ticket.priority === "Élevée") { %>
+          <span class="badge bg-danger fs-6">Élevée</span>
+        <% } else if (ticket.priority === "Moyenne") { %>
+          <span class="badge bg-warning text-dark fs-6">Moyenne</span>
+        <% } else { %>
+          <span class="badge bg-success fs-6">Faible</span>
+        <% } %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Statut :</label>
+        <% if (ticket.status === "Ouvert") { %>
+          <span class="badge badge-ouvert fs-6">Ouvert</span>
+        <% } else if (ticket.status === "En cours") { %>
+          <span class="badge badge-encours fs-6">En cours</span>
+        <% } else if (ticket.status === "Résolu") { %>
+          <span class="badge badge-resolu fs-6">Résolu</span>
+        <% } else if (ticket.status === "Fermé") { %>
+          <span class="badge badge-ferme fs-6">Fermé</span>
+        <% } else { %>
+          <span class="badge bg-secondary fs-6">Inconnu</span>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="row text-center mb-4">
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Créé par :</label>
+        <p class="text-muted">
+          <%= ticket.createdBy ? ticket.createdBy.firstName + " " + ticket.createdBy.lastName : "N/A" %>
+        </p>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="fw-bold text-dark d-block">Assigné à :</label>
+        <p class="text-muted">
+          <%= ticket.assignedTo ? ticket.assignedTo.firstName + " " + ticket.assignedTo.lastName : "Non assigné" %>
+        </p>
+      </div>
+    </div>
+
+    <% if (user.role === 'admin') { %>
+    <div class="row text-center mb-4">
+      <div class="col-md-6">
+        <form method="POST" action="/tickets/<%= ticket._id %>/status">
+          <label for="status" class="fw-bold text-dark d-block mb-2">Changer Statut :</label>
+          <select name="status" id="status" class="form-select mb-2" required>
+            <option value="Ouvert" <%= ticket.status === 'Ouvert' ? 'selected' : '' %>>Ouvert</option>
+            <option value="En cours" <%= ticket.status === 'En cours' ? 'selected' : '' %>>En cours</option>
+            <option value="Résolu" <%= ticket.status === 'Résolu' ? 'selected' : '' %>>Résolu</option>
+            <option value="Fermé" <%= ticket.status === 'Fermé' ? 'selected' : '' %>>Fermé</option>
+          </select>
+          <button type="submit" class="btn btn-primary btn-sm">Mettre à jour</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <form method="POST" action="/tickets/<%= ticket._id %>/assign">
+          <label for="agentId" class="fw-bold text-dark d-block mb-2">Assigner Agent :</label>
+          <select name="agentId" id="agentId" class="form-select mb-2" required>
+            <% agents.forEach(agent => { %>
+              <option value="<%= agent._id %>">
+                <%= agent.firstName %> <%= agent.lastName %> (<%= agent.email %>)
+              </option>
+            <% }) %>
+          </select>
+          <button type="submit" class="btn btn-success btn-sm">Assigner</button>
+        </form>
+      </div>
+    </div>
+    <% } %>
+
+  </div>
+</div>
+</div>
+<div id="chat-container" style="margin-top: 20px;">
+  <div id="chat-messages" style="height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px;"></div>
+  <input type="text" id="chat-input" placeholder="Tapez votre message..." style="width: 70%; margin-top: 10px;">
+  <button onclick="sendMessage()" style="width: 25%; margin-top: 10px;">Envoyer</button>
+</div>
+<script src="/js/chatbot.js"></script>
+<%- include("../partials/footer") %>

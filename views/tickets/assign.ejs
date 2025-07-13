@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+<div class="wrapper">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card p-4 shadow-lg" style="background-color: #2c2f48; border-radius: 15px; width: 100%; max-width: 500px;">
+    <h2 class="mb-4 text-center text-white">Assigner un Agent</h2>
+
+    <form method="POST" action="/tickets/<%= ticket._id %>/assign">
+      <div class="mb-3">
+        <label for="agentId" class="form-label text-white">Sélectionner un agent</label>
+        <select id="agentId" name="agentId" class="form-select bg-dark text-white border-secondary" required>
+          <% agents.forEach(agent => { %>
+            <option value="<%= agent._id %>">
+              <%= agent.firstName %> <%= agent.lastName %> (<%= agent.email %>)
+            </option>
+          <% }); %>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-warning w-100">Assigner l'Agent</button>
+    </form>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>
+
+</div>

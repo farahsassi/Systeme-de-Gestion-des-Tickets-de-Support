@@ -1,0 +1,164 @@
+<%- include("../partials/header") %>
+<div class="wrapper">
+  <div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-0 text-dark">Tickets</h1>
+      <% if (user.role !== 'admin') { %>
+        <a href="/tickets/new" class="btn btn-success">Créer un ticket</a>
+      <% } %>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Titre</th>
+            <th>Priorité</th>
+            <th>Statut</th>
+            <th>Assigné à</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% tickets.forEach(ticket => { %>
+            <tr>
+              <td><%= ticket.title %></td>
+
+              <td>
+                <% if (ticket.priority === "Élevée") { %>
+                  <span class="badge bg-danger">Élevée</span>
+                <% } else if (ticket.priority === "Moyenne") { %>
+                  <span class="badge bg-warning text-dark">Moyenne</span>
+                <% } else { %>
+                  <span class="badge bg-success">Faible</span>
+                <% } %>
+              </td>
+
+              <td>
+                <% if (ticket.status === "Ouvert") { %>
+                  <span class="badge badge-ouvert">Ouvert</span>
+                <% } else if (ticket.status === "En cours") { %>
+                  <span class="badge badge-encours">En cours</span>
+                <% } else if (ticket.status === "Résolu") { %>
+                  <span class="badge badge-resolu">Résolu</span>
+                <% } else if (ticket.status === "Fermé") { %>
+                  <span class="badge badge-ferme">Fermé</span>
+                <% } else { %>
+                  <span class="badge bg-secondary">Inconnu</span>
+                <% } %>
+              </td>
+
+              <td>
+                <%= ticket.assignedTo ? ticket.assignedTo.firstName + ' ' + ticket.assignedTo.lastName : 'Non assigné' %>
+              </td>
+
+              <td class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="/tickets/<%= ticket._id %>" class="btn btn-outline-primary btn-sm" title="Voir">
+                  <i class="fas fa-eye"></i>
+                </a>
+                
+                <% if (user.role !== 'admin') { %>
+                  <a href="/tickets/<%= ticket._id %>/edit" class="btn btn-outline-warning btn-sm" title="Éditer">
+                    <i class="fas fa-edit"></i>
+                  </a>
+
+                  <form action="/tickets/<%= ticket._id %>/delete" method="POST" onsubmit="return confirm('Confirmer la suppression ?');" style="display:inline;">
+                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Supprimer">
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Chatbot Section -->
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">
+              <i class="fas fa-robot me-2"></i>
+              Assistant Virtuel - Création de Tickets
+            </h5>
+          </div>
+          <div class="card-body">
+            <div id="chat-messages" class="chat-messages mb-3">
+              <div class="bot-message">
+                <div class="message-content">
+                  <i class="fas fa-robot text-primary me-2"></i>
+                  Bonjour ! Je suis votre assistant virtuel. Je peux vous aider à créer un ticket de support. Décrivez-moi votre problème et je créerai un ticket pour vous.
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <input type="text" id="chat-input" class="form-control" placeholder="Décrivez votre problème..." onkeypress="if(event.key === 'Enter') sendMessage()">
+              <button class="btn btn-primary" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+.chat-messages {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e9ecef;
+  border-radius: 0.375rem;
+  padding: 15px;
+  background-color: #f8f9fa;
+}
+
+.bot-message, .user-message {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.bot-message {
+  justify-content: flex-start;
+}
+
+.user-message {
+  justify-content: flex-end;
+}
+
+.message-content {
+  max-width: 80%;
+  padding: 10px 15px;
+  border-radius: 18px;
+  word-wrap: break-word;
+}
+
+.bot-message .message-content {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-bottom-left-radius: 5px;
+}
+
+.user-message .message-content {
+  background-color: #007bff;
+  color: white;
+  border-bottom-right-radius: 5px;
+}
+
+.message-time {
+  font-size: 0.75rem;
+  color: #6c757d;
+  margin-top: 5px;
+}
+</style>
+
+<script src="/js/chatbot.js"></script>
+<%- include("../partials/footer") %>

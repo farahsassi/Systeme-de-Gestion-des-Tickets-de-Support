@@ -1,0 +1,43 @@
+<%- include("../partials/header") %>
+<div class="wrapper">
+<div class="container my-5">
+  <div class="card p-4 shadow-lg mx-auto" style="max-width: 600px; background-color: #ffffff;">
+    <h2 class="mb-4 text-center text-dark">Créer un Nouveau Ticket</h2>
+
+    <% if (error) { %>
+      <div class="alert alert-danger text-center"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/tickets/new">
+      <div class="mb-3">
+        <label for="title" class="form-label text-dark">Titre</label>
+        <input type="text" name="title" id="title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label text-dark">Description</label>
+        <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="priority" class="form-label text-dark">Priorité</label>
+        <select name="priority" id="priority" class="form-select" required>
+          <option value="Élevée">Élevée</option>
+          <option value="Moyenne">Moyenne</option>
+          <option value="Faible">Faible</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label text-dark">Catégorie</label>
+        <input type="text" name="category" id="category" class="form-control" placeholder="Ex: Technique, Commercial..." required>
+      </div>
+
+      <div class="d-grid">
+        <button class="btn btn-primary btn-lg">Créer</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<%- include("../partials/footer") %>

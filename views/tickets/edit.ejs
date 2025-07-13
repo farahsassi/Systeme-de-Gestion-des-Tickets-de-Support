@@ -1,0 +1,40 @@
+<%- include("../partials/header") %>
+<div class="wrapper">
+<div class="container my-5">
+  <div class="card shadow p-4 mx-auto" style="max-width: 700px;">
+    <h2 class="mb-4 text-center text-dark">Modifier le Ticket</h2>
+
+    <form method="POST" action="/tickets/<%= ticket._id %>/edit">
+      <div class="mb-3">
+        <label for="title" class="form-label fw-bold">Titre</label>
+        <input type="text" name="title" id="title" class="form-control" value="<%= ticket.title %>" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label fw-bold">Description</label>
+        <textarea name="description" id="description" class="form-control" rows="4" required><%= ticket.description %></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label for="priority" class="form-label fw-bold">Priorité</label>
+        <select name="priority" id="priority" class="form-select" required>
+          <option value="Élevée" <%= ticket.priority === 'Élevée' ? 'selected' : '' %>>Élevée</option>
+          <option value="Moyenne" <%= ticket.priority === 'Moyenne' ? 'selected' : '' %>>Moyenne</option>
+          <option value="Faible" <%= ticket.priority === 'Faible' ? 'selected' : '' %>>Faible</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="category" class="form-label fw-bold">Catégorie</label>
+        <input type="text" name="category" id="category" class="form-control" value="<%= ticket.category %>" required>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-success btn-lg">Mettre à jour</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+<%- include("../partials/footer") %>
