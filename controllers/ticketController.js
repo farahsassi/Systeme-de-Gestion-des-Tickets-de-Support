@@ -23,6 +23,7 @@ exports.createTicket = async (req, res) => {
       `Votre ticket "${ticket.title}" a été créé avec succès.`
     );
 
+    
     res.redirect("/tickets");
   } catch (err) {
     console.error(err);
