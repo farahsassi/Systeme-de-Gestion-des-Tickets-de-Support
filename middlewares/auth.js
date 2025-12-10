@@ -23,7 +23,6 @@ exports.isAgent = (req, res, next) => {
   return res.status(403).send("Accès refusé : agent uniquement");
 };
 
-// Pour restreindre la création aux utilisateurs normaux
 exports.isUser = (req, res, next) => {
   if (req.session.user && req.session.user.role === "user") {
     return next();

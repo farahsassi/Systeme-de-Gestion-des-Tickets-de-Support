@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ticket-app-deployment
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ticket-app
+  template:
+    metadata:
+      labels:
+        app: ticket-app
+    spec:
+      containers:
+      - name: ticket-app
+        image: ticket-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongo-service:27017/support"

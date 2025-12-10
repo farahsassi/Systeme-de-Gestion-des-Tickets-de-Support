@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-require('dotenv').config(); // pour lire ton .env
+require('dotenv').config(); 
 
 async function sendTestEmail() {
   try {
@@ -15,7 +15,7 @@ async function sendTestEmail() {
 
     const info = await transporter.sendMail({
       from: `"Support Client" <${process.env.EMAIL_USER}>`,
-      to: "tonemaildetest@gmail.com", // <-- Mets ici ton email personnel
+      to: "tonemaildetest@gmail.com", 
       subject: "✅ Test Email depuis Node.js",
       text: "Félicitations, votre configuration SMTP fonctionne parfaitement ! 🎯",
     });

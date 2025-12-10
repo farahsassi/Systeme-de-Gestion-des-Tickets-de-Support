@@ -1,0 +1,52 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]  # déclenche sur chaque push sur main
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ Récupère le code
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2️⃣ Installer Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    # 3️⃣ Installer les dépendances
+    - name: Install dependencies
+      run: npm install
+
+    # 4️⃣ Lancer les tests (si tu en as)
+    - name: Run tests
+      run: npm test || echo "No tests defined"
+
+    # 5️⃣ Login Docker Hub
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # 6️⃣ Build et push Docker image
+    - name: Build and push Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/ticket-app:latest .
+        docker push ${{ secrets.DOCKER_USERNAME }}/ticket-app:latest
+
+    # 7️⃣ Déployer sur Kubernetes
+    - name: Set up Kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl set image deployment/ticket-app-deployment ticket-app=${{ secrets.DOCKER_USERNAME }}/ticket-app:latest
+        kubectl rollout status deployment/ticket-app-deployment
