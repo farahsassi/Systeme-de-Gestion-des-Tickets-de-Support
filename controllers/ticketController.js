@@ -6,6 +6,7 @@ exports.getNewTicketForm = (req, res) => {
   res.render("tickets/new", { error: null });
 };
 
+
 exports.createTicket = async (req, res) => {
   const { title, description, priority, category } = req.body;
   try {
